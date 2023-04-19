@@ -5,7 +5,7 @@ import random
 import requests
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import CallbackQuery
 
 from config import open_weather_token, exchange_token
 from create_bot import bot, dp
@@ -121,7 +121,7 @@ async def picture(message: types.Message):
 
 # начальная функция для опроса, запрашиваем chat_id
 async def poll(message: types.Message):
-    await message.answer('Начинаю создание опроса\nУкажите группу для отправки.')
+    await message.answer('Начинаю создание опроса\nУкажите группу для отправки.(chat_id)')
     await PollState.chat_id.set()
 
 
@@ -137,7 +137,7 @@ async def poll_question(message: types.Message, state: FSMContext):
 async def poll_answers(message: types.Message, state: FSMContext):
     question = message.text
     await state.update_data(question=question)
-    await message.answer('Добавить вариант ответа.')
+    await message.answer('Добавить вариант ответа.(через запятую)')
     await PollState.options.set()
 
 
